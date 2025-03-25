@@ -201,14 +201,14 @@ software_dominio() {
 inquiry_options() {
   
   print_banner
-  printf "${WHITE} 💻 Bem vindo(a) ao Whaticket SaaS 7.0V, Selecione abaixo a proxima ação!${GRAY_LIGHT}"
+  printf "${WHITE} 💻 Bem vindo(a) ao Whaticket SaaS ZDG, Selecione abaixo a proxima ação!${GRAY_LIGHT}"
   printf "\n\n"
-  printf "   [1] Instalar Whaticket SaaS 7.0V \n"
-  # printf "   [1] Atualizar Whaticket SaaS \n"
-  printf "   [2] Deletar Whaticket SaaS 7.0V \n"
-  printf "   [3] Bloquear Whaticket SaaS 7.0V \n"
-  printf "   [4] Desbloquear Whaticket SaaS 7.0V \n"
-  printf "   [5] Alter. dominio Whaticket SaaS 7.0V \n"
+  printf "   [1] Instalar Whaticket SaaS ZDG\n"
+  # printf "   [1] Atualizar Whaticket SaaS ZDG\n"
+  printf "   [2] Deletar Whaticket SaaS ZDG\n"
+  printf "   [3] Bloquear Whaticket SaaS ZDG\n"
+  printf "   [4] Desbloquear Whaticket SaaS ZDG\n"
+  printf "   [5] Alter. dominio Whaticket SaaS ZDG\n"
   printf "\n"
   read -p "> " option
 

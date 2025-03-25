@@ -14,7 +14,7 @@ backend_redis_create() {
   sleep 2
 
   sudo su - root <<EOF
-  usermod -aG docker deploy
+  usermod -aG docker deployzdg
   docker run --name redis-${instancia_add} -p ${redis_port}:6379 --restart always --detach redis redis-server --requirepass ${redis_pass}
 
   sleep 2
@@ -53,8 +53,8 @@ backend_set_env() {
   frontend_url=${frontend_url%%/*}
   frontend_url=https://$frontend_url
 
-sudo su - deploy << EOF
-  cat <<[-]EOF > /home/deploy/${instancia_add}/backend/.env
+sudo su - deployzdg << EOF
+  cat <<[-]EOF > /home/deployzdg/${instancia_add}/backend/.env
 NODE_ENV=
 BACKEND_URL=${backend_url}
 FRONTEND_URL=${frontend_url}
@@ -79,10 +79,14 @@ USER_LIMIT=${max_user}
 CONNECTIONS_LIMIT=${max_whats}
 CLOSED_SEND_BY_ME=true
 
-#TRANSCRIÇÃO_DE_AUDIO_OPENAI
-OPENAI_API_KEY=suakey
+# GERENCIANET_SANDBOX=false
+# GERENCIANET_CLIENT_ID=Client_Id_Gerencianet
+# GERENCIANET_CLIENT_SECRET=Client_Secret_Gerencianet
+# GERENCIANET_PIX_CERT=certificado-Gerencianet
+# GERENCIANET_PIX_KEY=chave pix gerencianet
 
-
+# para usar GERENCIANET Em backend\certs
+# Salvar o certificado no formato .p12
 
 [-]EOF
 EOF
@@ -102,8 +106,8 @@ backend_node_dependencies() {
 
   sleep 2
 
-  sudo su - deploy <<EOF
-  cd /home/deploy/${instancia_add}/backend
+  sudo su - deployzdg <<EOF
+  cd /home/deployzdg/${instancia_add}/backend
   npm install
 EOF
 
@@ -122,8 +126,8 @@ backend_node_build() {
 
   sleep 2
 
-  sudo su - deploy <<EOF
-  cd /home/deploy/${instancia_add}/backend
+  sudo su - deployzdg <<EOF
+  cd /home/deployzdg/${instancia_add}/backend
   npm run build
 EOF
 
@@ -142,17 +146,16 @@ backend_update() {
 
   sleep 2
 
-  sudo su - deploy <<EOF
-  cd /home/deploy/${empresa_atualizar}
+  sudo su - deployzdg <<EOF
+  cd /home/deployzdg/${empresa_atualizar}
   pm2 stop ${empresa_atualizar}-backend
   git pull
-  cd /home/deploy/${empresa_atualizar}/backend
+  cd /home/deployzdg/${empresa_atualizar}/backend
   npm install --force
   npm update -f
   npm install @types/fs-extra
   rm -rf dist 
   npm run build
-  npx sequelize db:migrate
   npx sequelize db:migrate
   npx sequelize db:seed
   pm2 start ${empresa_atualizar}-backend
@@ -174,9 +177,8 @@ backend_db_migrate() {
 
   sleep 2
 
-  sudo su - deploy <<EOF
-  cd /home/deploy/${instancia_add}/backend
-  npx sequelize db:migrate
+  sudo su - deployzdg <<EOF
+  cd /home/deployzdg/${instancia_add}/backend
   npx sequelize db:migrate
 EOF
 
@@ -195,8 +197,8 @@ backend_db_seed() {
 
   sleep 2
 
-  sudo su - deploy <<EOF
-  cd /home/deploy/${instancia_add}/backend
+  sudo su - deployzdg <<EOF
+  cd /home/deployzdg/${instancia_add}/backend
   npx sequelize db:seed:all
 EOF
 
@@ -217,7 +219,7 @@ backend_start_pm2() {
   sleep 2
 
   sudo su - root <<EOF
-  cd /home/deploy/${instancia_add}/backend
+  cd /home/deployzdg/${instancia_add}/backend
   pm2 start dist/server.js --name ${instancia_add}-backend
   pm2 save --force
 EOF
